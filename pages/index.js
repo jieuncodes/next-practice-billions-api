@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { getAllBillionaires } from "../utils/api/api.js";
-import { formatAsset } from "../utils/formatNumbers.js";
 import Link from "next/link.js";
 
 export default function IndexPage() {
   const [billionaires, setBillionaires] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getAllBillionaires();
-        setBillionaires(data);
-      } catch (error) {
-        console.error("Error fetching billionaires:", error);
-      }
+  const fetchData = async () => {
+    try {
+      const data = await getAllBillionaires();
+      setBillionaires(data);
+    } catch (error) {
+      console.error("Error fetching billionaires:", error);
     }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -34,7 +34,7 @@ export default function IndexPage() {
               <div className="full-name">{billionaire.name}</div>
               <div className="info">
                 <span className="asset">
-                  {formatAsset(billionaire.netWorth)}
+                  {Math.round(billionaire.netWorth) / 1000} Billions
                 </span>
                 <span>/ </span>
                 <span className="industries">{billionaire.industries}</span>

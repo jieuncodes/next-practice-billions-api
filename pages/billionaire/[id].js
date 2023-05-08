@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { getBillionaireById } from "../../utils/api/api";
-import { formatAsset, formatWithCommas } from "../../utils/formatNumbers";
 
 export default function BillionairePage() {
   const router = useRouter();
@@ -36,7 +35,7 @@ export default function BillionairePage() {
             <div className="details">
               <span className="fullName">{billionaire.name}</span>
               <span className="networth">
-                Networth : {formatAsset(billionaire.netWorth)}
+                Networth : {Math.round(billionaire.netWorth) / 1000} Billion
               </span>
 
               <span className="country">Country : {billionaire.country}</span>
@@ -55,7 +54,7 @@ export default function BillionairePage() {
                     <div className="assetCard" key={id}>
                       <span className="ticker">Ticker : {asset.ticker}</span>
                       <span className="shares">
-                        Shares : {formatWithCommas(asset.numberOfShares)}
+                        Shares : {asset.numberOfShares.toLocaleString("en-US")}
                       </span>
                       <span className="excersiePrice">
                         Excersie Price : ${asset.sharePrice}
